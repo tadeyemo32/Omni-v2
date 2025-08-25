@@ -1,0 +1,194 @@
+# Compiled object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+omni_client
+omni_server
+
+# CMake build directory
+build/
+CMakeFiles/
+
+# CMake generated files
+CMakeCache.txt
+CMakeConfigureLog.yaml
+CMakeDirectoryInformation.cmake
+CMakeSystem.cmake
+CMakeDoxyfile
+CMakeDoxygenDefaults
+CMakeRuleHashes
+CMakeScripts/
+CTestTestfile.cmake
+*.cmake
+cmake_install.cmake
+Makefile
+*.ninja
+.ninja_deps
+.ninja_log
+compile_commands.json
+
+# Autotools
+/aclocal.m4
+/autom4te.cache/
+/compile
+/config.guess
+/config.h
+/config.h.in
+/config.log
+/config.status
+/config.sub
+/configure
+/depcomp
+/install-sh
+/libtool
+/ltmain.sh
+/m4/
+/missing
+/stamp-h1
+
+# Eclipse
+.project
+.cproject
+.settings/
+
+# Visual Studio
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.suo
+*.opensdf
+*.sdf
+
+# Xcode
+*.xcodeproj
+*.xcworkspace
+xcuserdata/
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# Qt Creator
+*.user
+*.autosave
+
+# CLion
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Vim
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Backup files
+*.bak
+*.backup
+*.tmp
+*.temp
+
+# Dependency directories
+deps/  # Consider if you want to ignore this or not
+           # Remove this line if you want to track your dependencies
+
+# Package files
+*.deb
+*.rpm
+*.tar.gz
+*.zip
+
+# Coverage files
+*.gcno
+*.gcda
+*.gcov
+
+# Profiling data
+*.profraw
+*.profdata
+
+# IDE specific files
+.vscode/
+.vs/
+
+# ctags/etags
+tags
+TAGS
+
+# MacOS
+.AppleDouble
+.LSOverride
+
+# Windows
+[Tt]humbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Python (if you have any scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Node.js (if you have any)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local development files
+.local/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
