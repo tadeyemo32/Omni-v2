@@ -4,7 +4,6 @@
 #include <logger/logger.h>
 
 int main(){
-
  
         Log::Logger logger("client_logs.json");
 

@@ -17,7 +17,7 @@
 *.so
 *.so.*
 *.dylib
-
+bin/*
 # Shared objects (inc. Windows DLLs)
 *.dll
 *.so
