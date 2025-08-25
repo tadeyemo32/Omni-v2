@@ -71,7 +71,7 @@ compile_commands.json
 /m4/
 /missing
 /stamp-h1
-
+/.cache
 # Eclipse
 .project
 .cproject
