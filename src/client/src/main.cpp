@@ -5,9 +5,7 @@
 
 int main(){
 
-
-
-
+ 
         Log::Logger logger("client_logs.json");
 
     return 0;
