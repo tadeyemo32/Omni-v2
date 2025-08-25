@@ -1,8 +1,7 @@
 
 #ifndef OMNI_V2_SRC_LOGGER_H
 #define OMNI_V2_SRC_LOGGER_H
-
-
+#include <nlohmann/json.hpp>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -10,13 +9,10 @@
 #include <ctime>
 #include <iomanip>
 #include <stdexcept>
-namespace Log{
-class Logger {
-private:
-    std::ofstream file;
+using json = nlohmann::json;
 
-    // Helper to get current time as a formatted string
-    std::string current_time() {
+namespace Log{
+       std::string current_time() {
         auto now = std::chrono::system_clock::now();
         std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
         std::tm local_tm = *std::localtime(&now_time_t);
@@ -25,12 +21,57 @@ private:
         oss << std::put_time(&local_tm, "%Y-%m-%d %H:%M:%S");
         return oss.str();
     }
+     enum log_type{INFO,DEBUG,WARNING,ERROR,CRITICAL,UNKNOWN};
 
-public:
+    std::string  logTypeToString(log_type &t){
+        std::string logT;
+         switch(t) {
+            case INFO :
+                logT="Info";
+                break;
+            case DEBUG:
+                logT = "Debug"; 
+                break; 
+            case WARNING :
+
+                logT ="Warning";
+                break;
+            case ERROR:
+                logT = "Error";
+                break;
+            case CRITICAL: 
+                logT = "Critial";
+                break; 
+            case UNKNOWN:
+                logT = "Unknown";
+                break; 
+            defualt: 
+                logT = "Undefined type";
+                break ; 
+         }
+        return logT;
+    }
+    namespace ns{
+     void to_Json(json &j, const std::string& m , log_type &t){
+         std::string logT = logTypeToString(t); 
+       
+            j = json{
+                {"Log Type",logT},
+                {"Log:",m},
+                {"Timestamp",current_time()}
+            };
+    } 
+    }
+
+     class Logger {
+            private:
+    std::ofstream file;
+
+
+        public:
     explicit Logger(const std::string& filename, std::ios::openmode mode = std::ios::out) {
         std::filesystem::path dirPath = "../logs";
 
-        // Ensure logs directory exists
         if (!std::filesystem::exists(dirPath)) {
             if (std::filesystem::create_directory(dirPath)) {
                 std::cout << "[" << current_time() << "] "
@@ -41,10 +82,8 @@ public:
             }
         }
 
-        // Build full log file path
         std::filesystem::path fullLogFilePath = dirPath / filename;
 
-        // Try to open the log file
         file.open(fullLogFilePath, mode);
 
         if (!file.is_open()) {
@@ -55,14 +94,23 @@ public:
         } else {
          std::cout << "[" << current_time() << "] "
                       << "Successfully opened file: " << filename << std::endl;
+                         log("Client Started",INFO);
+
         }
     }
 
-    void log(const std::string& message) {
-        if (file.is_open()) {
-            file << "[" << current_time() << "] " << message << std::endl;
-        }
+  
+   void log(const std::string& message, log_type type) {
+       
+    if (file.is_open()) {
+        json j;   
+        ns::to_Json(j, message, type);
+        file << std::setw(4) << j << std::endl; 
+        std::cout<<"["<<current_time()<<"] ->"<<"["<<logTypeToString(type)<<"] "<<"Log Created\n";
+       return ; 
     }
+
+}
 
     ~Logger() {
         if (file.is_open()) {
