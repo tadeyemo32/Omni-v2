@@ -7,13 +7,13 @@
 
 
 inline Log::Logger& getClientLogger() {
-    static Log::Logger& instance = Log::Logger::getInstance("client_logs", Log::FormatType::JSON, 5,true);
+    static Log::Logger& instance = Log::Logger::getInstance("server_test_logs", Log::FormatType::JSON, 5,true);
     return instance;
 }
 
 
 
  
-#define client_logger getClientLogger()
+#define server_test_logger getClientLogger()
 
 #endif
