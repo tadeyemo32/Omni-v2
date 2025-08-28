@@ -8,57 +8,26 @@
 
 using json = nlohmann::json;
 
-namespace Client{
+namespace Client {
 
 class Client {
-    private:
+private:
+    httplib::SSLClient client;
+    int port;
+    std::string url;
     
-    httplib::Client client ;
-    int port = 8000; 
-    std::string url = "localhost";
+    json parse_response(const httplib::Result& res, const std::string& endpoint);
   
-    public:
-     Client();
-    Client(std::string,unsigned int port);
+public:
+    Client();
+    Client(std::string url, unsigned int port);
     bool test_connection();
     json get(const std::string &end_point);
     json put(const std::string& end_point, const json& payload);
     
     ~Client();
-        
 };
-
-
-
-
-
-
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#endif 
-
-
-
-
-
+#endif

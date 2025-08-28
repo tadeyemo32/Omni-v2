@@ -5,12 +5,16 @@
 
 
 
-
 inline Log::Logger& getClientLogger() {
-    static Log::Logger& instance = Log::Logger::getInstance("client_logs", Log::FormatType::JSON, 5,true);
+    static Log::Logger& instance = Log::Logger::getInstance(
+        "client_logs",
+        Log::FormatType::JSON,
+        5,
+        true,
+        "../logs"
+    );
     return instance;
 }
-
 
 
  

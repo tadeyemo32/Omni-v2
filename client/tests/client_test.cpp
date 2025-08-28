@@ -1,4 +1,3 @@
-#define CPPHTTPLIB_OPENSSL_SUPPORT
 #include <iostream>
 #include <http/httplib.h>
 #include <nlohmann/json.hpp>
@@ -10,19 +9,14 @@ int main() {
     std::cout << "=== SSL Client Test ===" << std::endl;
     
     try {
-        // Create SSL client
-        httplib::SSLClient cli("localhost", 9001); // Connect to test server port
-        
-        // Disable SSL verification for self-signed certificate
+        httplib::SSLClient cli("localhost", 9001);         
         cli.enable_server_certificate_verification(false);
         
-        // Set timeouts
         cli.set_connection_timeout(5);
         cli.set_read_timeout(5);
         
         std::cout << "Testing connection to test server on port 9001..." << std::endl;
         
-        // Test endpoints
         std::vector<std::string> endpoints = {"/health", "/test"};
         
         for (const auto& endpoint : endpoints) {
@@ -34,7 +28,6 @@ int main() {
                 std::cout << "✓ Status: " << res->status << std::endl;
                 std::cout << "Response: " << res->body << std::endl;
                 
-                // Try to parse as JSON
                 if (res->get_header_value("Content-Type").find("application/json") != std::string::npos) {
                     try {
                         json j = json::parse(res->body);

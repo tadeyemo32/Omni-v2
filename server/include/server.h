@@ -1,27 +1,26 @@
 #ifndef OMNI_V2_SERVER_H
 #define OMNI_V2_SERVER_H
 
-#include <iostream>
-#include <http/httplib.h>
 #include <string>
+#include <http/httplib.h>
 
 namespace Server {
 
 class Server {
 private:
-    unsigned int port;
     std::string url;
+    unsigned int port;
     httplib::SSLServer srv;
 
 public:
-    Server();
     Server(std::string l, unsigned int p);
+    Server();
     ~Server();
     
-    bool start();  
-    void stop();  
-    };
+    bool start();
+    void stop();
+};
 
-} 
+}
 
 #endif
