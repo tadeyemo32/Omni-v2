@@ -1,4 +1,3 @@
-
 #include <nlohmann/json.hpp>
 #include "server.h"
 #include "server_logger.h"
@@ -9,16 +8,13 @@
 #include <cstdlib>
 #include <memory>
 #include <sstream>
+#include <atomic>
 #include "server_auth.h"
 #include "server_request_handler.h"
-
-
 
 using json = nlohmann::json;
 namespace Server {
 namespace fs = std::filesystem;
-
-
 
 Server::Server(std::string l, unsigned int p, int t_count)
     : url(l), port(p), threads(t_count) 
@@ -35,44 +31,61 @@ Server::Server(std::string l, unsigned int p, int t_count)
         throw std::runtime_error("SSL server initialization failed");
     }
 
-
-     set_all_end_points(*srv);
-      server_logger.log("SSL server ready to start...", Log::LogType::INFO);
+    set_all_end_points(*srv);
+    server_logger.log("SSL server ready to start...", Log::LogType::INFO);
 }
 
-
 Server::~Server() {
-
-    if (server_thread.joinable()) server_thread.join();
-    server_logger.log("Server instance destroyed", Log::LogType::INFO);
     stop();
+    if (server_thread.joinable()) {
+        server_thread.join();
+    }
+    server_logger.log("Server instance destroyed", Log::LogType::INFO);
 }
 
 bool Server::start() {
     server_logger.log("Starting server in background thread...", Log::LogType::INFO);
 
     server_thread = std::thread([this]() {
-        if (!srv->bind_to_port(url, port)) {
-            server_logger.log("Failed to bind to port " + std::to_string(port), Log::LogType::ERROR);
-            throw std::runtime_error("Failed to bind to port");
-        }
+        try {
+            if (!srv->bind_to_port(url.c_str(), port)) {
+                server_logger.log("Failed to bind to port " + std::to_string(port), Log::LogType::ERROR);
+                return;
+            }
 
-        server_logger.log("Server listening on " + url + ":" + std::to_string(port), Log::LogType::INFO);
-
-        if (!srv->listen(url, port, threads)) {
-            server_logger.log("Server stopped unexpectedly", Log::LogType::ERROR);
+            server_logger.log("Server successfully bound to port " + std::to_string(port), 
+                             Log::LogType::INFO);
+            
+            // Set a reasonable timeout to prevent hanging
+            srv->set_read_timeout(5, 0); // 5 seconds
+            srv->set_write_timeout(5, 0); // 5 seconds
+            
+            server_logger.log("Server listening on " + url + ":" + std::to_string(port), 
+                             Log::LogType::INFO);
+            
+            if (!srv->listen_after_bind()) {
+                server_logger.log("Server stopped listening", Log::LogType::INFO);
+            }
+        } catch (const std::exception& e) {
+            server_logger.log(std::string("Server thread exception: ") + e.what(), 
+                             Log::LogType::ERROR);
         }
     });
 
+    // Give the server a moment to start
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    
+    // Detach the thread to avoid blocking destruction
+    server_thread.detach();
+    
+    server_logger.log("Server started successfully", Log::LogType::INFO);
     return true;
 }
 
-//stop server 
 void Server::stop() {
     if (srv) {
         srv->stop();
-        server_logger.log("Server stopped", Log::LogType::INFO);
+        server_logger.log("Server stop requested", Log::LogType::INFO);
     }
 }
-
-} 
+}
