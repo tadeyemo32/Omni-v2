@@ -10,11 +10,13 @@ class Server {
 private:
     std::string url;
     unsigned int port;
-    httplib::SSLServer srv;
-
+ std::unique_ptr<httplib::SSLServer> srv;
+int threads =1  ;
+ std::thread server_thread;
 public:
     Server(std::string l, unsigned int p);
     Server();
+    Server(std::string l, unsigned int p,int m);
     ~Server();
     
     bool start();
