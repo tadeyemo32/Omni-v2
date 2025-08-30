@@ -18,7 +18,7 @@ public:
     Server();
     Server(std::string l, unsigned int p,int m);
     ~Server();
-    
+        
     bool start();
     void stop();
 };

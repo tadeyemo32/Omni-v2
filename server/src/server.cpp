@@ -10,6 +10,9 @@
 #include <memory>
 #include <sstream>
 #include "server_auth.h"
+#include "server_request_handler.h"
+
+
 
 using json = nlohmann::json;
 namespace Server {
@@ -32,30 +35,17 @@ Server::Server(std::string l, unsigned int p, int t_count)
         throw std::runtime_error("SSL server initialization failed");
     }
 
-    srv->Get("/health", [](const httplib::Request&, httplib::Response& res) {
-        std::ostringstream oss;
-        oss << std::this_thread::get_id();
-        server_logger.log("Handling request on thread " + std::to_string(std::hash<std::thread::id>{}(std::this_thread::get_id())),
-                          Log::LogType::INFO);
-        json response_json;
-    response_json["status"] = "healthy";
-    response_json["message"] = "Server is running!";
 
-    res.status = 200;
-    res.set_header("Content-Type", "application/json");
-    res.set_content(response_json.dump(), "application/json"); 
-        
-    });
-
-    server_logger.log("SSL server ready to start...", Log::LogType::INFO);
+     set_all_end_points(*srv);
+      server_logger.log("SSL server ready to start...", Log::LogType::INFO);
 }
 
-Server::Server() : Server("0.0.0.0", 9000, 10) {}
 
 Server::~Server() {
-    stop();
+
     if (server_thread.joinable()) server_thread.join();
     server_logger.log("Server instance destroyed", Log::LogType::INFO);
+    stop();
 }
 
 bool Server::start() {
@@ -77,6 +67,7 @@ bool Server::start() {
     return true;
 }
 
+//stop server 
 void Server::stop() {
     if (srv) {
         srv->stop();

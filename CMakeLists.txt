@@ -18,7 +18,8 @@ include_directories(${CMAKE_SOURCE_DIR}/deps)
 set(SERVER_SOURCES
     ${CMAKE_SOURCE_DIR}/server/src/main.cpp
     ${CMAKE_SOURCE_DIR}/server/src/server.cpp
-    ${CMAKE_SOURCE_DIR}/server/src/server_auth.cpp  # explicitly add SSL auth implementation
+    ${CMAKE_SOURCE_DIR}/server/src/server_auth.cpp
+    ${CMAKE_SOURCE_DIR}/server/src/server_request_hadler.cpp  # include request handler
 )
 
 # ---- Collect client sources ----

@@ -32,8 +32,7 @@ namespace fs = std::filesystem;
         return;
     }
 
-    std::string certCmd = "openssl req -new -x509 -key " + keyPath + " -out " + certPath +
-                          " -days 365 -subj \"/C=US/ST=State/L=City/O=Organization/OU=Unit/CN=localhost\"";
+    std::string certCmd = "openssl req -new -x509 -key " + keyPath + " -out " + certPath + " -days 365 -subj \"/C=US/ST=State/L=City/O=Organization/OU=Unit/CN=localhost\"";
     if (system(certCmd.c_str()) != 0) {
         server_logger.log("Failed to generate cert.pem", Log::LogType::ERROR);
         return;
