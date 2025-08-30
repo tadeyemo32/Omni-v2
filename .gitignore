@@ -7,7 +7,7 @@
 # Precompiled headers
 *.gch
 *.pch
-
+ec2.sh
 # Libraries
 *.lib
 *.a
