@@ -13,8 +13,17 @@ Omni Server is a modern C++ HTTPS server implementation built on a client-server
 - **Health Monitoring**: Built-in health check endpoint for system monitoring
 - **Automatic Certificate Generation**: Self-signed SSL certificate generation at runtime
 
-## Technology Stack
+## Deployment Scripts
 
+The project includes shell scripts for easy AWS deployment:
+
+### `deploy-aws.sh`
+```bash
+#!/bin/bash
+``````
+ Automated deployment script for AWS EC2
+- Handles instance setup, dependencies, and service configuration
+- Technology Stack
 - **C++17**: Modern C++ standards compliance
 - **httplib**: HTTP server library for endpoint handling
 - **nlohmann/json**: JSON parsing and serialization
