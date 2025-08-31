@@ -18,9 +18,7 @@ Omni Server is a modern C++ HTTPS server implementation built on a client-server
 The project includes shell scripts for easy AWS deployment:
 
 ### `deploy-aws.sh`
-```bash
-#!/bin/bash
-``````
+
  Automated deployment script for AWS EC2
 - Handles instance setup, dependencies, and service configuration
 - Technology Stack
