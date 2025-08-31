@@ -19,7 +19,7 @@ private:
     json parse_response(const httplib::Result& res, const std::string& endpoint);
   
 public:
-    Client();
+    Client() = delete;
     Client(std::string url, unsigned int port);
     bool test_connection();
     json get(const std::string &end_point);

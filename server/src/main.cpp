@@ -12,7 +12,6 @@ void signalHandler(int signal) {
 }
 
 int main() {
-    // Set up signal handling
     std::signal(SIGINT, signalHandler);
     std::signal(SIGTERM, signalHandler);
     

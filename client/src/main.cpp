@@ -6,35 +6,33 @@
 
 using json = nlohmann::json;
 
+bool isRunning = true;
+void line() { std::cout << "=============================================\n"; }
+void printHeader(const std::string& title) {
+    line();
+    std::cout << "[INFO] " << title << "\n";
+    line();
+}
+
+void printMenu() {
+    printHeader("Welcome to Omni");
+    std::cout<<"1.";
+    std::cout<<"2. Check Health ";
+    std::cout << "3. Exit\n";
+    line();
+    std::cout << "Select option: ";
+}
+
 int main() {
-    try {
-        Client::Client client("localhost", 9000);
-        
-        std::cout << "Testing connection to server..." << std::endl;
-        if (!client.test_connection()) {
-            std::cerr << "Failed to connect to server" << std::endl;
-            return 1;
-        }
-        
-        std::cout << "Connection successful. Making GET request to /health..." << std::endl;
-        json j = client.get("/health");
-        
-        if (j.contains("error")) {
-            std::cerr << "Error in response: " << j.dump(4) << std::endl;
-            
-            if (j["error"] == "json_parse_error" && j.contains("raw_response")) {
-                std::cout << "Raw server response: " << j["raw_response"] << std::endl;
-            }
-            return 1;
-        }
-        
-        std::cout << "Server response:" << std::endl;
-        std::cout << j.dump(4) << std::endl;
-        
-    } catch (const std::exception& e) {
-        std::cerr << "Client error: " << e.what() << std::endl;
-        return 1;
+           
+
+        printMenu();
+    while (isRunning){
+    
+
+
     }
+        
 
     return 0;
 }

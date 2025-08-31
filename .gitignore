@@ -8,6 +8,7 @@
 *.gch
 *.pch
 ec2.sh
+omni_server_key.pem
 # Libraries
 *.lib
 *.a
