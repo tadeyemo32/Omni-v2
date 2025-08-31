@@ -1,0 +1,6 @@
+[submodule "deps/Logger"]
+	path = deps/Logger
+	url = https://github.com/tadeyemo32/Logger.git
+[submodule "deps/deps/Logger"]
+	path = deps/deps/Logger
+	url = https://github.com/tadeyemo32/Logger.git
