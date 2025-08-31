@@ -56,10 +56,9 @@ bool Server::start() {
             server_logger.log("Server successfully bound to port " + std::to_string(port), 
                              Log::LogType::INFO);
             
-            // Set a reasonable timeout to prevent hanging
-            srv->set_read_timeout(5, 0); // 5 seconds
-            srv->set_write_timeout(5, 0); // 5 seconds
-            
+            srv->set_read_timeout(5, 0); 
+            srv->set_write_timeout(5, 0); 
+
             server_logger.log("Server listening on " + url + ":" + std::to_string(port), 
                              Log::LogType::INFO);
             
@@ -72,10 +71,8 @@ bool Server::start() {
         }
     });
 
-    // Give the server a moment to start
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     
-    // Detach the thread to avoid blocking destruction
     server_thread.detach();
     
     server_logger.log("Server started successfully", Log::LogType::INFO);

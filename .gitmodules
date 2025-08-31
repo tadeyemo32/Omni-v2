@@ -4,3 +4,9 @@
 [submodule "deps/deps/Logger"]
 	path = deps/deps/Logger
 	url = https://github.com/tadeyemo32/Logger.git
+[submodule "deps/deps/imgui"]
+	path = deps/deps/imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "deps/implot"]
+	path = deps/implot
+	url = https://github.com/epezent/implot.git
